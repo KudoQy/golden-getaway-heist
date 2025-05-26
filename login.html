@@ -16,11 +16,6 @@
             font-size: 3em;
             margin-bottom: 20px;
         }
-        h2 {
-            font-size: 1.5em;
-            margin-top: 30px;
-            color: #fff;
-        }
         .form-container {
             background-color: #2b2b2b;
             padding: 40px;
@@ -47,10 +42,8 @@
         .form-container input[type="submit"]:hover {
             background-color: #ffd700;
         }
-        .hint {
-            font-style: italic;
-            color: #e3e3e3;
-            margin-top: 20px;
+        .error {
+            color: red;
         }
     </style>
 </head>
@@ -59,7 +52,7 @@
     <h2>Infiltrate the vault and find the treasure hidden inside...</h2>
     
     <div class="form-container">
-        <form action="login.php" method="POST">
+        <form method="POST">
             <label for="username">Agent Username:</label>
             <input type="text" id="username" name="username" required placeholder="Enter your username">
             <br>
@@ -68,8 +61,9 @@
             <br>
             <input type="submit" value="Bypass Security">
         </form>
-        <p class="hint">Hint: To access the vault, you might need to think outside the box...</p>
-        <!-- Maybe the login is more than just entering a username and password? -->
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
     </div>
 </body>
 </html>
