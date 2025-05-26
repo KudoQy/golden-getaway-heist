@@ -3,28 +3,28 @@ import os
 
 app = Flask(__name__)
 
-# Simulate a simple database of users
-# In a real scenario, you would never do this!
-# This is just for the challenge to simulate SQL injection vulnerability
+# Simulated "Database" for users
 users_db = {
     "admin": "password123",
 }
 
-# Define the login page route
+# Vulnerable login route with SQL Injection
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
 
-        # Simulate a vulnerable SQL query (this is insecure and just for the challenge)
-        # For demonstration, we simulate an SQL query with string concatenation
-        # WARNING: This is NOT secure. Never use raw SQL queries in real apps like this!
+        # Simulate SQL query (this is vulnerable to SQL injection)
         query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-        
-        # Simulate checking the "database" (the dictionary)
-        if username in users_db and users_db[username] == password:
+
+        # Check for SQL Injection attempt (simulating backend check)
+        # For this challenge, the injection will bypass authentication by using 'OR 1=1'
+        if username == "admin" and password == "password123":
             return render_template("success.html", flag="HEIST{golden_getaway_88}")
+        elif username == "admin' OR '1'='1" and password == "anything":
+            # Simulate successful login using the SQL Injection
+            return render_template("success.html", flag="HEIST{sql_injection_flag_1}")
         else:
             return render_template("index.html", error="Incorrect username or password")
 
